@@ -1,0 +1,1 @@
+ARRIVA_URL = "https://arriva.gal/plataforma/api/"
