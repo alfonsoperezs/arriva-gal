@@ -28,7 +28,7 @@ def _parse_stops(data: dict) -> list[Stop]:
     stops =[]
     for el in data["paradas"]:
         stop = Stop(
-            stop_id=el.get("id"),
+            stop_id=el.get("parada"),
             name=el.get("nombre"),
             web_name=el.get("nom_web"),
             weight=el.get("peso"),
@@ -51,4 +51,11 @@ def get_stops_by_keywords(keywords: str) -> list[Stop]:
     stops = get_stops()
     keywords_list = keywords.lower().split(" ")
     return [item for item in stops if all(keyword in item.name.lower() for keyword in keywords_list)]
+
+def get_stops_by_id(id: int) -> Stop:
+    stops = get_stops()
+    for stop in stops:
+        if stop.stop_id == id:
+            return stop
+    return None
     
