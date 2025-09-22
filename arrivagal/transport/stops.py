@@ -38,6 +38,17 @@ def _parse_stops(data: dict) -> list[Stop]:
         stops.append(stop)
     return stops 
    
-def get_stops():
+def get_stops() -> list[Stop]:
+    """
+    Get all lines.
+    """
     return _parse_stops(_api_client.get("superparadas/index/buscador.json"))
+
+def get_stops_by_keywords(keywords: str) -> list[Stop]:
+    """
+    Get lines whose name match with the given keywords
+    """
+    stops = get_stops()
+    keywords_list = keywords.lower().split(" ")
+    return [item for item in stops if all(keyword in item.name.lower() for keyword in keywords_list)]
     
