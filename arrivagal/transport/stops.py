@@ -26,12 +26,12 @@ class Stop():
     
 def _parse_stops(data: dict) -> list[Stop]:
     stops =[]
-    for el in data:
+    for el in data["paradas"]:
         stop = Stop(
             stop_id=el.get("id"),
-            name=el.get("name"),
-            web_name=el.get("webName"),
-            weight=el.get("weight"),
+            name=el.get("nombre"),
+            web_name=el.get("nom_web"),
+            weight=el.get("peso"),
             lat=el.get("lat"),
             lon=el.get("lon"),
         )
