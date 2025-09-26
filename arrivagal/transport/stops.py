@@ -26,9 +26,9 @@ class Stop():
     
 def _parse_stops(data: dict) -> list[Stop]:
     stops =[]
-    for el in data["paradas"]:
+    for el in data:
         stop = Stop(
-            stop_id=el.get("id"),
+            stop_id=el.get("parada"),
             name=el.get("nombre"),
             web_name=el.get("nom_web"),
             weight=el.get("peso"),
@@ -38,6 +38,32 @@ def _parse_stops(data: dict) -> list[Stop]:
         stops.append(stop)
     return stops 
    
-def get_stops():
-    return _parse_stops(_api_client.get("superparadas/index/buscador.json"))
-    
+def get_stops() -> list[Stop]:
+    """
+    Get all lines.
+    """
+    return _parse_stops(_api_client.get("superparadas/index/buscador.json")["paradas"])
+
+def get_stops_by_keywords(keywords: str) -> list[Stop]:
+    """
+    Get lines whose name match with the given keywords.
+    """
+    stops = get_stops()
+    keywords_list = keywords.lower().split(" ")
+    return [item for item in stops if all(keyword in item.name.lower() for keyword in keywords_list)]
+
+def get_stops_by_id(id: int) -> Stop:
+    """
+    Get the line by id.
+    """
+    stops = get_stops()
+    for stop in stops:
+        if stop.stop_id == id:
+            return stop
+    return None
+
+def get_destinations_from_stop(id: int) -> list[Stop]:
+    """
+    Get all destination stops reachable from the specified origin stop.
+    """
+    return _parse_stops(_api_client.get(f"superparadas/por-origen/{id}/buscador.json"))
