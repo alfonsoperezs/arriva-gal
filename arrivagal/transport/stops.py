@@ -26,7 +26,7 @@ class Stop():
     
 def _parse_stops(data: dict) -> list[Stop]:
     stops =[]
-    for el in data["paradas"]:
+    for el in data:
         stop = Stop(
             stop_id=el.get("parada"),
             name=el.get("nombre"),
@@ -42,7 +42,7 @@ def get_stops() -> list[Stop]:
     """
     Get all lines.
     """
-    return _parse_stops(_api_client.get("superparadas/index/buscador.json"))
+    return _parse_stops(_api_client.get("superparadas/index/buscador.json")["paradas"])
 
 def get_stops_by_keywords(keywords: str) -> list[Stop]:
     """
@@ -61,4 +61,9 @@ def get_stops_by_id(id: int) -> Stop:
         if stop.stop_id == id:
             return stop
     return None
-    
+
+def get_destinations_from_stop(id: int) -> list[Stop]:
+    """
+    Get all destination stops reachable from the specified origin stop.
+    """
+    return _parse_stops(_api_client.get(f"superparadas/por-origen/{id}/buscador.json"))
