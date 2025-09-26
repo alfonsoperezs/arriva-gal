@@ -46,13 +46,16 @@ def get_stops() -> list[Stop]:
 
 def get_stops_by_keywords(keywords: str) -> list[Stop]:
     """
-    Get lines whose name match with the given keywords
+    Get lines whose name match with the given keywords.
     """
     stops = get_stops()
     keywords_list = keywords.lower().split(" ")
     return [item for item in stops if all(keyword in item.name.lower() for keyword in keywords_list)]
 
 def get_stops_by_id(id: int) -> Stop:
+    """
+    Get the line by id.
+    """
     stops = get_stops()
     for stop in stops:
         if stop.stop_id == id:
