@@ -57,36 +57,38 @@ class Bus:
     def __repr__(self):
         return str(self.id)
     
+def _parse_bus(data: dict) -> Bus:
+    return Bus(
+        id=data.get("id"),
+        license_plate=data.get("matricula"),
+        brand=data.get("marca"),
+        model=data.get("modelo"),
+        description=data.get("descripcion"),
+        created=data.get("created"),
+        modified=data.get("modified"),
+        name=data.get("name"),
+        odometer=data.get("odometer"),
+        date=data.get("date"),
+        platform=data.get("plataforma"),
+        ovelan_id=data.get("ovelan_id"),
+        webfleet_uid=data.get("webfleet_uid"),
+        active=data.get("activo"),
+        emission_standard=data.get("normativa_emisiones"),
+        emission_category=data.get("categoria_emisiones"),
+        first_registration_date=data.get("fecha_primera_matriculacion"),
+        seats=data.get("asientos"),
+        total_capacity=data.get("plazas_totales"),
+        in_workshop=data.get("en_taller"),
+        in_workshop_since=data.get("en_taller_desde"),
+        in_workshop_notes=data.get("en_taller_notas"),
+        position_ovelan=data.get("posicion_ovelan"),
+        position_webfleet=data.get("posicion_webfleet"),
+    )
+    
 def _parse_buses(data: dict) -> list[Bus]:
     buses = []
     for el in data["buses"]:
-        bus = Bus(
-            id=el.get("id"),
-            license_plate=el.get("matricula"),
-            brand=el.get("marca"),
-            model=el.get("modelo"),
-            description=el.get("descripcion"),
-            created=el.get("created"),
-            modified=el.get("modified"),
-            name=el.get("name"),
-            odometer=el.get("odometer"),
-            date=el.get("date"),
-            platform=el.get("plataforma"),
-            ovelan_id=el.get("ovelan_id"),
-            webfleet_uid=el.get("webfleet_uid"),
-            active=el.get("activo"),
-            emission_standard=el.get("normativa_emisiones"),
-            emission_category=el.get("categoria_emisiones"),
-            first_registration_date=el.get("fecha_primera_matriculacion"),
-            seats=el.get("asientos"),
-            total_capacity=el.get("plazas_totales"),
-            in_workshop=el.get("en_taller"),
-            in_workshop_since=el.get("en_taller_desde"),
-            in_workshop_notes=el.get("en_taller_notas"),
-            position_ovelan=el.get("posicion_ovelan"),
-            position_webfleet=el.get("posicion_webfleet"),
-        )
-        buses.append(bus)
+        buses.append(_parse_bus(el))
     return buses
 
 def get_buses() -> list[Bus]:
@@ -99,10 +101,5 @@ def get_bus_by_id(id: int) -> Bus | None:
     """
     Obtains a bus by its id.
     """
-    buses = get_buses()
-
-    for bus in buses:
-        if bus.id == id:
-            return bus
-    return None
+    return _parse_bus(_api_client.get(f"buses/getGeoloc/{id}.json"))
 
