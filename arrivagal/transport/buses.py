@@ -1,4 +1,5 @@
 from . import _api_client
+from ..exceptions import ArrivaGalBusNotFoundException
 
 class Bus:
     """A bus with its data."""
@@ -101,5 +102,10 @@ def get_bus_by_id(id: int) -> Bus | None:
     """
     Obtains a bus by its id.
     """
-    return _parse_bus(_api_client.get(f"buses/getGeoloc/{id}.json"))
+    response = _api_client.get(f"buses/getGeoloc/{id}.json")
+
+    if response is None:
+        raise ArrivaGalBusNotFoundException(id, response)
+
+    return _parse_bus(response)
 
