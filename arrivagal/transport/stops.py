@@ -52,7 +52,7 @@ def get_stops_by_keywords(keywords: str) -> list[Stop]:
     keywords_list = keywords.lower().split(" ")
     return [item for item in stops if all(keyword in item.name.lower() for keyword in keywords_list)]
 
-def get_stops_by_id(id: int) -> Stop:
+def get_stops_by_id(id: int) -> Stop | None:
     """
     Get the line by id.
     """

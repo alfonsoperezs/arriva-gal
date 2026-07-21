@@ -2,3 +2,5 @@ wheel
 setuptools
 twine
 requests
+pytest
+pytest-cov
