@@ -40,13 +40,22 @@ def _parse_stops(data: dict) -> list[Stop]:
    
 def get_stops() -> list[Stop]:
     """
-    Get all lines.
+    Obtains all available bus stops.
+
+    Returns:
+        A list containing all bus stops.
     """
     return _parse_stops(_api_client.get("superparadas/index/buscador.json")["paradas"])
 
 def get_stops_by_keywords(keywords: str) -> list[Stop]:
     """
-    Get lines whose name match with the given keywords.
+    Obtains bus stops whose name matches the given keywords.
+
+    Args:
+        keywords: Words used to filter stops by name.
+
+    Returns:
+        A list of stops matching the given keywords.
     """
     stops = get_stops()
     keywords_list = keywords.lower().split(" ")
@@ -54,7 +63,13 @@ def get_stops_by_keywords(keywords: str) -> list[Stop]:
 
 def get_stops_by_id(id: int) -> Stop | None:
     """
-    Get the line by id.
+    Obtains a bus stop by its identifier.
+
+    Args:
+        id: Identifier of the bus stop.
+
+    Returns:
+        The matching bus stop if found, otherwise None.
     """
     stops = get_stops()
     for stop in stops:
@@ -64,6 +79,12 @@ def get_stops_by_id(id: int) -> Stop | None:
 
 def get_destinations_from_stop(id: int) -> list[Stop]:
     """
-    Get all destination stops reachable from the specified origin stop.
+    Obtains all destination stops reachable from a given origin stop.
+
+    Args:
+        id: Identifier of the origin bus stop.
+
+    Returns:
+        A list of reachable destination stops.
     """
     return _parse_stops(_api_client.get(f"superparadas/por-origen/{id}/buscador.json"))
