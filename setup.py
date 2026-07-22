@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="arriva-gal",
-    version="0.1.0",
+    version="0.1.1",
     author="Alfonso Pérez Sánchez",
     author_email="alfonso.perezsanchez@hotmail.com",
     description="API wrapper for Arriva Galicia",
