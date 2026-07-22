@@ -1,16 +1,21 @@
 class ArrivaGalBaseException(Exception):
-    """Base exception for all ArrivaGal errors."""
     def __init__(self, message, response=None):
         self.message = message
-        if response is not None:
-            message = (
-                f"HTTP {response.status_code} {response.reason}: {message}"
-            )
+        self.response = response
         super().__init__(message)
+
 
 class ArrivaGalBusNotFoundException(ArrivaGalBaseException):
     """
-    Exception used when the server returns null on bus endpoint (it doesn't exist)
+    Exception used when the server returns null on bus endpoint (it doesn't exist).
     """
-    def __init__(self, bus_id, response):
+    def __init__(self, bus_id, response=None):
         super().__init__(f"Bus with ID '{bus_id}' was not found.", response)
+
+
+class ArrivaGalLineNotFoundException(ArrivaGalBaseException):
+    """
+    Exception used when the server returns null on line endpoint (it doesn't exist).
+    """
+    def __init__(self, id, response=None):
+        super().__init__(f"Line with ID '{id}' was not found.", response)
