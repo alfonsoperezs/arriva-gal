@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="arrivagal",
+    name="arriva-gal",
     version="0.1.2",
     author="Alfonso Pérez Sánchez",
     author_email="alfonso.perezsanchez@hotmail.com",
