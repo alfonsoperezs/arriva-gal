@@ -80,7 +80,7 @@ def get_lines() -> list[Line]:
     """
     return _parse_lines(_api_client.get("lineas/index.json"))
 
-def get_line_by_id(id: int) -> Line:
+def get_line_by_id(id: int) -> Line | None:
     """
     Get a bus line by its id.
 
