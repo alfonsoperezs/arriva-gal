@@ -1,0 +1,19 @@
+site_name: ArrivaGal
+site_description: Python wrapper for Arriva Galicia API
+
+theme:
+  name: material
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+
+nav:
+  - Home: index.md
+  - Transport:
+      - Buses: buses.md
+      - Stops: stops.md
