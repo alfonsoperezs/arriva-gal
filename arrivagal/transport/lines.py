@@ -99,3 +99,20 @@ def get_line_by_id(id: int) -> Line:
         raise ArrivaGalLineNotFoundException(id, response)
     
     return _parse_line(response["linea"])
+
+def get_lines_by_keywords(keywords: str) -> list[Line]:
+    """
+    Get bus lines whose name matches the given keywords.
+
+    The search is case-insensitive and all provided keywords must be
+    contained in the line name.
+
+    Args:
+        keywords: Keywords to search for in the line name.
+
+    Returns:
+        A list of bus lines matching the given keywords.
+    """
+    lines = get_lines()
+    keywords_list = keywords.lower().split(" ")
+    return [item for item in lines if all(keyword in item.name.lower() for keyword in keywords_list)]

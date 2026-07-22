@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import patch
 
 from arrivagal.transport.lines import (
     Line,
@@ -6,6 +7,7 @@ from arrivagal.transport.lines import (
     _parse_lines,
     get_lines,
     get_line_by_id,
+    get_lines_by_keywords,
 )
 from arrivagal.exceptions import ArrivaGalLineNotFoundException
 
@@ -93,3 +95,117 @@ def test_get_line_by_id_not_found(monkeypatch):
 
     with pytest.raises(ArrivaGalLineNotFoundException):
         get_line_by_id(999)
+
+def test_get_lines_by_keywords_single_keyword():
+    lines = [
+        Line(
+            id=1,
+            administrative_id=100,
+            code=200,
+            name="Coruña E.A.-Arteixo",
+            origin_stop_id=1,
+            destination_stop_id=2,
+            outbound_description="",
+            return_description="",
+            valid_from="",
+            valid_until="",
+        ),
+        Line(
+            id=2,
+            administrative_id=100,
+            code=201,
+            name="Coruña E.A.-Fisterra",
+            origin_stop_id=1,
+            destination_stop_id=3,
+            outbound_description="",
+            return_description="",
+            valid_from="",
+            valid_until="",
+        ),
+    ]
+
+    with patch("arrivagal.transport.lines.get_lines", return_value=lines):
+        result = get_lines_by_keywords("fisterra")
+
+    assert len(result) == 1
+    assert result[0].name == "Coruña E.A.-Fisterra"
+
+
+def test_get_lines_by_keywords_multiple_keywords():
+    lines = [
+        Line(
+            id=1,
+            administrative_id=100,
+            code=200,
+            name="Coruña E.A.-Arteixo",
+            origin_stop_id=1,
+            destination_stop_id=2,
+            outbound_description="",
+            return_description="",
+            valid_from="",
+            valid_until="",
+        ),
+        Line(
+            id=2,
+            administrative_id=100,
+            code=201,
+            name="Coruña E.A.-Fisterra",
+            origin_stop_id=1,
+            destination_stop_id=3,
+            outbound_description="",
+            return_description="",
+            valid_from="",
+            valid_until="",
+        ),
+    ]
+
+    with patch("arrivagal.transport.lines.get_lines", return_value=lines):
+        result = get_lines_by_keywords("coruña fisterra")
+
+    assert len(result) == 1
+    assert result[0].name == "Coruña E.A.-Fisterra"
+
+
+def test_get_lines_by_keywords_case_insensitive():
+    lines = [
+        Line(
+            id=1,
+            administrative_id=100,
+            code=200,
+            name="Coruña E.A.-Arteixo",
+            origin_stop_id=1,
+            destination_stop_id=2,
+            outbound_description="",
+            return_description="",
+            valid_from="",
+            valid_until="",
+        )
+    ]
+
+    with patch("arrivagal.transport.lines.get_lines", return_value=lines):
+        result = get_lines_by_keywords("ARTEIXO")
+
+    assert len(result) == 1
+    assert result[0].name == "Coruña E.A.-Arteixo"
+
+
+def test_get_lines_by_keywords_no_matches():
+    lines = [
+        Line(
+            id=1,
+            administrative_id=100,
+            code=200,
+            name="Coruña E.A.-Arteixo",
+            origin_stop_id=1,
+            destination_stop_id=2,
+            outbound_description="",
+            return_description="",
+            valid_from="",
+            valid_until="",
+        )
+    ]
+
+    with patch("arrivagal.transport.lines.get_lines", return_value=lines):
+        result = get_lines_by_keywords("fisterra")
+
+    assert result == []
