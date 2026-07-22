@@ -17,3 +17,4 @@ nav:
   - Transport:
       - Buses: buses.md
       - Stops: stops.md
+      - Lines: lines.md
