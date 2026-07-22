@@ -9,7 +9,7 @@ It provides a simple interface to access public transport information from Arriv
 Install the package:
 
 ```bash
-pip install arrivagal
+pip install arriva-gal
 ```
 
 ## 📚 Documentation
