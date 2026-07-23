@@ -19,3 +19,10 @@ class ArrivaGalLineNotFoundException(ArrivaGalBaseException):
     """
     def __init__(self, id, response=None):
         super().__init__(f"Line with ID '{id}' was not found.", response)
+
+class ArrivaGalExpeditionNotFoundException(ArrivaGalBaseException):
+    """
+    Exception used when the server returns null on expedition endpoint (it doesn't exist).
+    """
+    def __init__(self, id, response=None):
+        super().__init__(f"Expedition with ID '{id}' was not found.", response)

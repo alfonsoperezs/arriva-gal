@@ -6,5 +6,6 @@ _api_client = APIClient(ARRIVA_URL)
 from . import stops
 from . import buses
 from . import lines
+from . import expeditions
 
-__all__ = ["stops", "buses", "lines"]
+__all__ = ["stops", "buses", "lines", "expeditions"]
