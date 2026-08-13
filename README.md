@@ -14,9 +14,7 @@ pip install arriva-gal
 
 ## 📚 Documentation
 
-The full API documentation is available here:
-
-https://alfonsoperezs.github.io/arriva-gal/
+The full API documentation is available [here](https://alfonsoperezs.github.io/arriva-gal/):
 
 ## 🤝 Contributing
 
